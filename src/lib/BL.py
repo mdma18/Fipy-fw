@@ -11,13 +11,15 @@
 import binascii
 import time
 from network import Bluetooth
-bt = Bluetooth()
-bt.start_scan(-1)
 
 
 class Blues:
+    def __init__(self):
+        pass
 
-    def Initiate():
+    def Connect(self):
+        bt = Bluetooth()
+        bt.start_scan(-1)
         while True:
             adv = bt.get_adv()
             if adv:

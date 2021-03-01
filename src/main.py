@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from lib.Bluetooth import Blues
+from lib.BL import Blues
 
 print("Hello")
-Blues.Initiate()
+Blues.Connect()
