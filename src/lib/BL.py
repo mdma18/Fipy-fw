@@ -14,28 +14,31 @@ from network import Bluetooth
 
 
 class Blues:
-    def __init__(self):
+    @classmethod
+    def __init__(cls):
         pass
 
-    def Connect(self):
-        bt = Bluetooth()
-        bt.start_scan(-1)
+    @classmethod
+    def ConnectBluetooth(cls):
+        mBluetooth = Bluetooth()
+        mBluetooth.start_scan(-1)
         while True:
-            adv = bt.get_adv()
+            adv = mBluetooth.get_adv()
             if adv:
                 # try to get the complete name
-                print(bt.resolve_adv_data(adv.data, Bluetooth.ADV_NAME_CMPL))
+                print(mBluetooth.resolve_adv_data(
+                    adv.data, Bluetooth.ADV_NAME_CMPL))
 
                 # try to get the manufacturer data (Apple's iBeacon data is sent here)
-                mfg_data = bt.resolve_adv_data(
+                mfg_data = mBluetooth.resolve_adv_data(
                     adv.data, Bluetooth.ADV_MANUFACTURER_DATA)
 
                 if mfg_data:
                     # try to get the manufacturer data (Apple's iBeacon data is sent here)
                     print(binascii.hexlify(mfg_data))
 
-                if bt.resolve_adv_data(adv.data, Bluetooth.ADV_NAME_CMPL) == 'Heart Rate':
-                    conn = bt.connect(adv.mac)
+                if mBluetooth.resolve_adv_data(adv.data, Bluetooth.ADV_NAME_CMPL) == 'Heart Rate':
+                    conn = mBluetooth.connect(adv.mac)
                     services = conn.services()
 
                     for service in services:
@@ -55,3 +58,7 @@ class Blues:
                     break
             else:
                 time.sleep(0.050)
+
+    @classmethod
+    def Blah(cls):
+        pass

@@ -3,9 +3,9 @@
     "python.jediEnabled": false,
 
     // Loaded Stubs:  esp32-micropython-1.11.0 
-    "python.autoComplete.extraPaths": [".micropy\\BradenM-micropy-stubs-53c3c70\\frozen", ".micropy\\BradenM-micropy-stubs-e1b8ce6\\frozen", ".micropy\\BradenM-micropy-stubs-53c3c70\\stubs", ".micropy\\Fipy-fw", "lib"],
-    "python.autoComplete.typeshedPaths":  [".micropy\\BradenM-micropy-stubs-53c3c70\\frozen", ".micropy\\BradenM-micropy-stubs-e1b8ce6\\frozen", ".micropy\\BradenM-micropy-stubs-53c3c70\\stubs", ".micropy\\Fipy-fw", "lib"],
-    "python.analysis.typeshedPaths":  [".micropy\\BradenM-micropy-stubs-53c3c70\\frozen", ".micropy\\BradenM-micropy-stubs-e1b8ce6\\frozen", ".micropy\\BradenM-micropy-stubs-53c3c70\\stubs", ".micropy\\Fipy-fw", "lib"],
+    "python.autoComplete.extraPaths": [".micropy\\BradenM-micropy-stubs-53c3c70\\frozen", ".micropy\\BradenM-micropy-stubs-e1b8ce6\\frozen", ".micropy\\BradenM-micropy-stubs-53c3c70\\stubs", "src"],
+    "python.autoComplete.typeshedPaths":  [".micropy\\BradenM-micropy-stubs-53c3c70\\frozen", ".micropy\\BradenM-micropy-stubs-e1b8ce6\\frozen", ".micropy\\BradenM-micropy-stubs-53c3c70\\stubs", "src"],
+    "python.analysis.typeshedPaths":  [".micropy\\BradenM-micropy-stubs-53c3c70\\frozen", ".micropy\\BradenM-micropy-stubs-e1b8ce6\\frozen", ".micropy\\BradenM-micropy-stubs-53c3c70\\stubs", "src"],
 
     "python.linting.pylintEnabled": true,
     "python.languageServer": "Microsoft"

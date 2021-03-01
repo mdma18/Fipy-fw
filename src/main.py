@@ -2,4 +2,5 @@
 from lib.BL import Blues
 
 print("Hello")
-Blues.Connect()
+mBL = Blues()
+mBL.ConnectBluetooth()
