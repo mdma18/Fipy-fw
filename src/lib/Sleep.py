@@ -1,38 +1,43 @@
 #!/usr/bin/env python
 import time
-from pytrack import Pytrack
+# from Additional.pytrack import Pytrack
 # from pysense import Pysense
-from LIS2HH12 import LIS2HH12
+# from Additional.LIS2HH12 import LIS2HH12
 
 
 class Sleep:
+    @classmethod
+    def __init__(cls):
+        pass
 
-    py = Pytrack()
-    # py = Pysense()
+    @classmethod
+    def Start(cls):
+        py = Pytrack()
+        # py = Pysense()
 
-    # display the reset reason code and the sleep remaining in seconds
-    # possible values of wakeup reason are:
-    # WAKE_REASON_ACCELEROMETER = 1
-    # WAKE_REASON_PUSH_BUTTON = 2
-    # WAKE_REASON_TIMER = 4
-    # WAKE_REASON_INT_PIN = 8
+        # display the reset reason code and the sleep remaining in seconds
+        # possible values of wakeup reason are:
+        # WAKE_REASON_ACCELEROMETER = 1
+        # WAKE_REASON_PUSH_BUTTON = 2
+        # WAKE_REASON_TIMER = 4
+        # WAKE_REASON_INT_PIN = 8
 
-    print("Wakeup reason: " + str(py.get_wake_reason()))
-    print("Approximate sleep remaining: " +
-          str(py.get_sleep_remaining()) + " sec")
-    time.sleep(0.5)
+        print("Wakeup reason: " + str(py.get_wake_reason()))
+        print("Approximate sleep remaining: " +
+              str(py.get_sleep_remaining()) + " sec")
+        time.sleep(0.5)
 
-    # enable wakeup source from INT pin
-    py.setup_int_pin_wake_up(False)
+        # enable wakeup source from INT pin
+        py.setup_int_pin_wake_up(False)
 
-    acc = LIS2HH12()
+        acc = LIS2HH12()
 
-    # enable activity and also inactivity interrupts, using the default callback handler
-    py.setup_int_wake_up(True, True)
+        # enable activity and also inactivity interrupts, using the default callback handler
+        py.setup_int_wake_up(True, True)
 
-    # set the acceleration threshold to 2000mG (2G) and the min duration to 200ms
-    acc.enable_activity_interrupt(2000, 200)
+        # set the acceleration threshold to 2000mG (2G) and the min duration to 200ms
+        acc.enable_activity_interrupt(2000, 200)
 
-    # go to sleep for 5 minutes maximum if no accelerometer interrupt happens
-    py.setup_sleep(300)
-    py.go_to_sleep()
+        # go to sleep for 5 minutes maximum if no accelerometer interrupt happens
+        py.setup_sleep(300)
+        py.go_to_sleep()
