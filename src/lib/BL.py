@@ -13,23 +13,46 @@ from network import Bluetooth
 
 
 class Blues:
-    @classmethod
-    def __init__(cls):
-        pass
 
-    @classmethod
-    def ConnectBluetooth(cls):
-        mBluetooth = Bluetooth()
-        mBluetooth.start_scan(-1)
+    def __init__(self):
+        print('Advertising Bluetooth...')
+        self.mBluetooth = Bluetooth()
+        self.mEvents = self.mBluetooth.events()
+        # self.mBluetooth.init([id=0, mode=Bluetooth.BLE, antenna=Bluetooth.INT_ANT, modem_sleep=False, pin=None, privacy=True, secure_connections=True, mtu=200])
+        self.mBluetooth.set_advertisement(
+            name='FiPy', service_uuid=b'1804000000000000')
+        self.mBluetooth.callback(trigger=self.mBluetooth.CLIENT_CONNECTED |
+                                 self.mBluetooth.CLIENT_DISCONNECTED, handler=self.Connection)
+        self.mBluetooth.advertise(True)
+        self.CreateServChar()
+        self.mCharacteristic.callback(
+            trigger=self.mBluetooth.CHAR_READ_EVENT, handler=self.CharCallback)
+
+    def Connect(self):
+        self.mBluetooth.start_scan(-1)
         while True:
-            mAdv = mBluetooth.get_adv()
+            mAdv = self.mBluetooth.get_adv()
             if mAdv:
                 print(ubinascii.hexlify(mAdv.mac))
 
-    @classmethod
-    def Blah(cls):
-        pass
+    def Connection(self, zResponse):
+        self.mEvents = zResponse.events()
+        if self.mEvents & self.mBluetooth.CLIENT_CONNECTED:
+            print("Client connected")
+        elif self.mEvents & self.mBluetooth.CLIENT_DISCONNECTED:
+            print("Client disconnected")
 
+    def CreateServChar(self):
+        # Create service and characteristic
+        self.mService = self.mBluetooth.service(
+            uuid='0000000000000000', isprimary=True)
+        self.mCharacteristic = self.mService.characteristic(uuid='0000000000000002', properties=self.mBluetooth.PROP_INDICATE |
+                                                            self.mBluetooth.PROP_BROADCAST | self.mBluetooth.PROP_READ | self.mBluetooth.PROP_NOTIFY, value='InitialValue')
+
+    def CharCallback(self, sChr):
+        self.mEvents = sChr.events()
+        if self.mEvents & self.mBluetooth.CHAR_READ_EVENT:
+            print('Bluetooth.CHAR_READ_EVENT')
 
 # def ConnectBluetooth(cls):
 #         mBluetooth = Bluetooth()
@@ -63,6 +86,7 @@ class Blues:
 #         #     # if mfg_data:
 #         #     #     # try to get the manufacturer data (Apple's iBeacon data is sent here)
 #         #     #     print(binascii.hexlify(mfg_data))
+
 
 #         #     if mBluetooth.resolve_adv_data(mAdv.data, Bluetooth.ADV_NAME_CMPL) == 'MDMA':
 #         #         conn = mBluetooth.connect(mAdv.mac)
